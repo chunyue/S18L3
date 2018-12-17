@@ -36,7 +36,7 @@ class BaseCharacter {
         _this.element.getElementsByClassName("hurt-text")[0].textContent = "";
         clearInterval(_this.id);
       }
-    }, 50);
+    }, 100);
     
   }
   die(){
