@@ -151,7 +151,9 @@ function heroAttack(){
 function heroHeal(){
   document.getElementsByClassName("skill-block")[0].style.display = "none";
   setTimeout(function(){
-      
+      hero.element.getElementsByClassName("hurt-text")[0].classList.add("heal");
+      hero.element.getElementsByClassName("hurt-text")[0].textContent = "30";
+
       if (hero.hp + 30 < hero.maxHp){
         hero.hp += 30;
         hero.hpElement.textContent = hero.hp;
@@ -163,8 +165,13 @@ function heroHeal(){
         hero.hurtElement.style.width = (100 - hero.hp / hero.maxHp * 100) + "%";
       }
 
+      setTimeout(function(){
+        hero.element.getElementsByClassName("hurt-text")[0].classList.remove("heal");
+        hero.element.getElementsByClassName("hurt-text")[0].textContent = "";
+        
+      },500);
     }, 100);
-
+      
 
   setTimeout(function(){
       monster.element.classList.add("attacking");
@@ -178,7 +185,7 @@ function heroHeal(){
           document.getElementsByClassName("skill-block")[0].style.display = "block";
         }
       }, 500);
-  }, 300);
+  }, 900);
  
 }
 
