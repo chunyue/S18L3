@@ -216,7 +216,15 @@ function addSkillEvent(){
   }
 }
 addSkillEvent();
-
+  
+document.onkeyup = function(event){
+  var key = String.fromCharCode(event.keyCode);
+  if (key == "A"){
+    heroAttack();
+  } else if (key == "D"){
+    heroHeal();
+  }
+}
 
 function finish(){
     var dialog = document.getElementById("dialog")
