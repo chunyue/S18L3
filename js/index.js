@@ -74,7 +74,39 @@ class Hero extends BaseCharacter{
     this.updateHtml(this.hpElement, this.hurtElement);
   }
 
+  heal(){
+      
+      if (hero.hp + 30 < hero.maxHp){
+        hero.hp += 30;
+        hero.hpElement.textContent = hero.hp;
+        hero.hurtElement.style.width = (100 - hero.hp / hero.maxHp * 100) + "%";
+      } else{
+        var plus = hero.maxHp - hero.hp 
+        hero.hp += plus ;
+        hero.hpElement.textContent = hero.hp;
+        hero.hurtElement.style.width = (100 - hero.hp / hero.maxHp * 100) + "%";
+      }
 
+      var _this = this;
+      var i = 1;
+      _this.id = setInterval(function(){
+
+        if(i == 1){
+          _this.element.getElementsByClassName("effect-image")[0].style.display = "block";
+          _this.element.getElementsByClassName("hurt-text")[0].classList.add("heal");
+          _this.element.getElementsByClassName("hurt-text")[0].textContent = "30";
+        }
+
+        _this.element.getElementsByClassName("effect-image")[0].src = 'images/effect/heal/' + i + '.png';
+        i++;
+        if (i > 8){
+          _this.element.getElementsByClassName("effect-image")[0].style.display = "none";
+          _this.element.getElementsByClassName("hurt-text")[0].classList.remove("heal");
+          _this.element.getElementsByClassName("hurt-text")[0].textContent = "";
+          clearInterval(_this.id);
+        }
+      }, 50);
+  }
 }
 
 class Monster extends BaseCharacter{
@@ -149,28 +181,12 @@ function heroAttack(){
 }
 
 function heroHeal(){
+
   document.getElementsByClassName("skill-block")[0].style.display = "none";
+
   setTimeout(function(){
-      hero.element.getElementsByClassName("hurt-text")[0].classList.add("heal");
-      hero.element.getElementsByClassName("hurt-text")[0].textContent = "30";
-
-      if (hero.hp + 30 < hero.maxHp){
-        hero.hp += 30;
-        hero.hpElement.textContent = hero.hp;
-        hero.hurtElement.style.width = (100 - hero.hp / hero.maxHp * 100) + "%";
-      } else{
-        plus = hero.maxHp - hero.hp 
-        hero.hp += plus ;
-        hero.hpElement.textContent = hero.hp;
-        hero.hurtElement.style.width = (100 - hero.hp / hero.maxHp * 100) + "%";
-      }
-
-      setTimeout(function(){
-        hero.element.getElementsByClassName("hurt-text")[0].classList.remove("heal");
-        hero.element.getElementsByClassName("hurt-text")[0].textContent = "";
-        
-      },500);
-    }, 100);
+    hero.heal();
+  }, 100);
       
 
   setTimeout(function(){
@@ -201,6 +217,7 @@ function addSkillEvent(){
 }
 addSkillEvent();
 
+
 function finish(){
     var dialog = document.getElementById("dialog")
     dialog.style.display = "block";
@@ -210,6 +227,5 @@ function finish(){
       dialog.classList.add("lose");
     }
 }
-  
 
 
